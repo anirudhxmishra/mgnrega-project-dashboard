@@ -62,7 +62,7 @@ export default function Dashboard() {
       {/* Background with gradient */}
       <div className="fixed inset-0 w-full h-full -z-10 bg-gradient-to-br from-green-900 via-yellow-900 to-green-800" />
       <div className="fixed inset-0 w-full h-full -z-5 bg-black/60" />
-      
+
       {/* Header */}
       <header className="sticky top-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/10 shadow-2xl">
         <div className="container mx-auto px-4 py-4">
@@ -95,7 +95,7 @@ export default function Dashboard() {
       <main className="container mx-auto px-4 py-8 space-y-8 relative">
         {/* Last Updated Banner */}
         <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-lg p-4 text-sm text-white/80 shadow-xl">
-          {t('Last updated on', 'अंतिम अपडेट')} {districtData.lastUpdated} • 
+          {t('Last updated on', 'अंतिम अपडेट')} {districtData.lastUpdated} •
           {t(' Data Source: data.gov.in (MGNREGA Open API)', ' डेटा स्रोत: data.gov.in (मनरेगा ओपन API)')}
         </div>
 
@@ -133,39 +133,56 @@ export default function Dashboard() {
 
         {/* Comparison View */}
         {showComparison && (
-          <div className="space-y-4 bg-black/40 backdrop-blur-md border border-white/20 rounded-lg p-6 shadow-xl">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-white drop-shadow-lg">
+          <div
+            className="
+      relative overflow-hidden space-y-6 
+      rounded-2xl border border-white/20 
+      bg-gradient-to-br from-emerald-900/60 via-amber-900/40 to-green-900/60 
+      backdrop-blur-xl shadow-2xl p-6 transition-all duration-500
+      animate-[fade-in_0.4s_ease-out]
+    "
+          >
+            {/* Subtle lighting overlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.05),transparent_70%)] pointer-events-none" />
+
+            {/* Header */}
+            <div className="flex items-center justify-between relative z-10">
+              <h2 className="text-2xl font-bold text-white drop-shadow-lg tracking-wide">
                 {t('District Comparison', 'जिला तुलना')}
               </h2>
               <Button
                 variant="outline"
                 onClick={() => setShowComparison(null)}
-                className="border-white/20 bg-black/20 text-white hover:bg-white/10"
+                className="border-white/30 bg-black/30 text-white hover:bg-white/10 backdrop-blur-md transition-all"
               >
                 {t('Close', 'बंद करें')}
               </Button>
             </div>
-            <ComparisonView
-              districtName={districtData.name}
-              districtValue={
-                showComparison === 'workdays'
-                  ? districtData.workdaysCreated
-                  : showComparison === 'households'
-                  ? districtData.householdsBenefited
-                  : districtData.pendingPayments
-              }
-              stateAverage={stateAverages[showComparison as keyof typeof stateAverages]}
-              metric={
-                showComparison === 'workdays'
-                  ? t('Workdays', 'कार्यदिवस')
-                  : showComparison === 'households'
-                  ? t('Households', 'परिवार')
-                  : t('Pending Payments', 'लंबित भुगतान')
-              }
-            />
+
+            {/* Comparison Content */}
+            <div className="relative z-10">
+              <ComparisonView
+                districtName={districtData.name}
+                districtValue={
+                  showComparison === 'workdays'
+                    ? districtData.workdaysCreated
+                    : showComparison === 'households'
+                      ? districtData.householdsBenefited
+                      : districtData.pendingPayments
+                }
+                stateAverage={stateAverages[showComparison as keyof typeof stateAverages]}
+                metric={
+                  showComparison === 'workdays'
+                    ? t('Workdays', 'कार्यदिवस')
+                    : showComparison === 'households'
+                      ? t('Households', 'परिवार')
+                      : t('Pending Payments', 'लंबित भुगतान')
+                }
+              />
+            </div>
           </div>
         )}
+
 
         {/* Footer */}
         <footer className="border-t border-white/10 pt-8 mt-12">
@@ -176,7 +193,7 @@ export default function Dashboard() {
                 'प्रतिक्रिया या समस्या रिपोर्ट करनी है?'
               )}
             </p>
-            <Button 
+            <Button
               variant="outline"
               className="border-white/20 bg-black/20 text-white hover:bg-white/10 backdrop-blur-md"
             >
