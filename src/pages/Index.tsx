@@ -50,19 +50,27 @@ const Index = () => {
         )}
 
         {/* YouTube Background */}
-        <iframe
-          className={`absolute inset-0 w-full h-full scale-150 transition-opacity duration-700 ${isVideoLoaded ? "opacity-100" : "opacity-0"
-            }`}
-          src="https://www.youtube.com/embed/5sfbSTcXfps?autoplay=1&mute=1&loop=1&playlist=5sfbSTcXfps&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
-          title="Background Video"
-          allow="autoplay; encrypted-media"
-          frameBorder="0"
-          onLoad={() => setIsVideoLoaded(true)}
-          style={{
-            pointerEvents: "none",
-            transformOrigin: "center center",
-          }}
-        />
+        {/* YouTube Background (Responsive) */}
+        <div className="absolute inset-0 overflow-hidden">
+          <iframe
+            className={`absolute top-1/2 left-1/2 transition-opacity duration-700 transform -translate-x-1/2 -translate-y-1/2 ${isVideoLoaded ? "opacity-100" : "opacity-0"
+              }`}
+            src="https://www.youtube.com/embed/5sfbSTcXfps?autoplay=1&mute=1&loop=1&playlist=5sfbSTcXfps&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
+            title="Background Video"
+            allow="autoplay; encrypted-media"
+            frameBorder="0"
+            onLoad={() => setIsVideoLoaded(true)}
+            style={{
+              pointerEvents: "none",
+              width: "100vw",
+              height: "56.25vw", // maintain 16:9 aspect ratio
+              minWidth: "177.78vh", // ensures video always covers vertically
+              minHeight: "100vh", // ensures full height coverage
+              objectFit: "cover",
+            }}
+          />
+        </div>
+
 
 
         {/* Smooth fade overlay during load */}
