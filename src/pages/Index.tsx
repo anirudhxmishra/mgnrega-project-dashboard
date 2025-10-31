@@ -43,28 +43,32 @@ const Index = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Fallback Background */}
       <div className="fixed inset-0 w-full h-full -z-20 bg-gradient-to-br from-green-900 via-yellow-900 to-green-800" />
-
-      {/* YouTube Background with smooth loader */}
       <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden">
+        {/* Loader overlay (visible until video loads) */}
+        {!isVideoLoaded && (
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 animate-pulse" />
+        )}
+
+        {/* YouTube Background */}
         <iframe
-          className="absolute inset-0 w-full h-full scale-150 transition-opacity duration-700"
+          className={`absolute inset-0 w-full h-full scale-150 transition-opacity duration-700 ${isVideoLoaded ? "opacity-100" : "opacity-0"
+            }`}
           src="https://www.youtube.com/embed/5sfbSTcXfps?autoplay=1&mute=1&loop=1&playlist=5sfbSTcXfps&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
           title="Background Video"
           allow="autoplay; encrypted-media"
           frameBorder="0"
-          style={{
-            pointerEvents: 'none',
-            transformOrigin: 'center center',
-            opacity: isVideoLoaded ? 1 : 0,
-          }}
           onLoad={() => setIsVideoLoaded(true)}
+          style={{
+            pointerEvents: "none",
+            transformOrigin: "center center",
+          }}
         />
+
 
         {/* Smooth fade overlay during load */}
         <div
-          className={`absolute inset-0 bg-black transition-opacity duration-1000 ${
-            isVideoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          }`}
+          className={`absolute inset-0 bg-black transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
         />
 
         {/* Gradient overlays */}
